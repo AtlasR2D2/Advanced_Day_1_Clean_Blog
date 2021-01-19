@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
 
 BLOG_POSTS_API = "https://api.npoint.io/43644ec4f0013682fc0d"
@@ -28,6 +28,15 @@ def show_post(ix):
             selected_post = blog_post
             break
     return render_template("post.html", post=selected_post)
+
+@app.route("/form-entry", methods=["POST"])
+def receive_data():
+    name = request.form["name"]
+    email = request.form["email"]
+    phone = request.form["phone"]
+    message = request.form["message"]
+    print(f"name: {name}\nemail: {email}\nphone: {phone}\nmessage: {message}")
+    return "<h1>Successfully sent your message</h1>"
 
 
 if __name__ == "__main__":
